@@ -24,6 +24,8 @@ var/
 *.egg
 ./kaggle
 .gitignore
+my_ssh_key
+my_ssh_key.pub
 
 # PyInstaller
 #  Usually these files are written by a python script from a template

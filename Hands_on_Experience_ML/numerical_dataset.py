@@ -10,9 +10,7 @@ from sklearn.model_selection import train_test_split
 # data collection and processing
 
 # loading the dataset
-diabetes_data = pd.read_csv(
-    "/home/muhammed-shafeeh/ML_AI/Ai-and-Ml/data/ai_and_ml/diabetes_numeric.csv"
-)
+diabetes_data = pd.read_csv("data/ai_and_ml/diabetes.csv")
 diabetes_data.head()
 
 # number of rows and columns

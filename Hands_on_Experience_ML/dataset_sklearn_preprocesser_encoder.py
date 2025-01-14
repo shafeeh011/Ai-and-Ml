@@ -4,9 +4,7 @@ from sklearn.preprocessing import LabelEncoder
 
 
 # first 5 rows of the dataset
-cancer_data = pd.read_csv(
-    "/home/muhammed-shafeeh/ML_AI/Ai-and-Ml/data/ai_and_ml/data.csv"
-)
+cancer_data = pd.read_csv("/home/muhammed-shafeeh/AI_ML/Ai-and-Ml/data/ai_and_ml/cancer_data.csv")
 cancer_data.head()
 
 # finding the count of different labels

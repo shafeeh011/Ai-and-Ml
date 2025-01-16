@@ -1,4 +1,5 @@
 # import libraries
+from unittest import result
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
@@ -7,7 +8,7 @@ import seaborn as sns
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import accuracy_score, confusion_matrix, classification_report
 from sklearn.model_selection import cross_val_score
-
+from sklearn.model_selection import GridSearchCV
 
 # import models
 from sklearn.linear_model import LogisticRegression
@@ -80,3 +81,76 @@ compare_models()
 
 #Inferance for the heart diseas dataset, #**Random Forest Classifier has the Highest accuracy value with default hyperparameter
 
+
+#**2. Comparing the models with different hyperparameter values  using cross validation
+
+models = [
+    LogisticRegression(max_iter=10000),
+    SVC(kernel='linear'),
+    KNeighborsClassifier(),
+    RandomForestClassifier(random_state=0)
+]
+
+model_hyperparameters = {
+    
+    "logistic_regression": {
+        'C': [0.001, 0.01, 0.1, 1, 10, 100, 1000],  
+        'max_iter': [100, 1000, 10000]
+    },
+    "svc": {
+        'C': [0.001, 0.01, 0.1, 1, 10, 100, 1000],
+        'kernel': ['linear', 'poly', 'rbf'],
+    },
+    "knn": {
+        'n_neighbors': [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
+    },
+    "random_forest": {
+        'n_estimators': [10, 20, 30, 40, 50, 60, 70, 80, 90, 100],
+        'max_depth': [2, 3, 4, 5, 6, 7, 8, 9, 10],
+    }
+}
+
+'''
+print(model_hyperparameters.keys())
+print(model_hyperparameters.values())
+
+model_hyperparameters[models[1]]
+
+model_hyperparameters['logistic_regression']
+model_hyperparameters['svc']['C']
+
+model_key = list(model_hyperparameters.keys())
+key = model_key[0]
+model_hyperparameters[key]
+'''
+
+model_key = list(model_hyperparameters.keys())
+
+def compare_models_with_hyperparameters(model_list, model_hyperparameters_list):
+    
+    result = []
+    i=0
+    
+    
+    for model in model_list:
+        key = model_key[i]
+        params = model_hyperparameters_list[key]
+        i+=1
+        
+        print(model)
+        print(params)
+        
+        classifier = GridSearchCV(model,params, cv=5)
+        classifier.fit(X_train, Y_train)
+        result.append({"model used" : model, "best score" : classifier.best_score_, "best parameters" : classifier.best_params_})
+        
+    return result
+
+
+
+
+result = compare_models_with_hyperparameters(models, model_hyperparameters)
+pd.DataFrame(result)
+print(result)
+        
+    
